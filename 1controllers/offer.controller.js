@@ -27,7 +27,7 @@ class OfferController {
 
     const { companyId, offerId } = req.params;
 
-    const userId = res.locals.user;
+    const userId = res.locals.userId;
 
     const { status, message } = await this.offerService.updateOffer(
       offerId,
@@ -45,9 +45,9 @@ class OfferController {
   deleteOffer = async (req, res, next) => {
     const { offerId } = req.params;
 
-    // const userId = res.locals.user
+    const userId = res.locals.userId;
 
-    const { status, message } = await this.offerService.destroyOffer(offerId);
+    const { status, message } = await this.offerService.destroyOffer(offerId, userId);
     res.status(status).json(message);
   };
 

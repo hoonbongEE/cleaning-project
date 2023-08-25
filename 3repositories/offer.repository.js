@@ -1,6 +1,22 @@
-const { Offer, sequelize } = require('../0models');
+const { Offer, User, sequelize } = require('../0models');
 
 class OfferRepository {
+  // 업체 조회
+  // findOffer = async (companyId) => {
+  //   console.log('+@@+#@#+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  //   const findcompany = await Offer.findOne({ where: { companyId } });
+  //   console.log('+@@+#@#+', companyId);
+  //   return findcompany;
+  // };
+
+  // 유저 조회
+  // findUserOne = async (userId) => {
+  //   console.log(userId);
+  //   const findcompany = await User.findOne({ where: { userId } });
+
+  //   return findcompany;
+  // };
+
   // 업체 서비스 생성
   createOffer = async (userId, companyId, offerName, offerNumber, price) => {
     const t = await sequelize.transaction();
@@ -23,13 +39,6 @@ class OfferRepository {
       await t.rollback();
       throw error;
     }
-  };
-
-  // 업체 조회
-  findOffer = async (companyId) => {
-    const findcompany = await Offer.findOne({ where: { companyId } });
-    console.log('+@@+#@#+', companyId);
-    return findcompany;
   };
 
   // 업체 서비스 수정
@@ -72,7 +81,7 @@ class OfferRepository {
   };
 
   // 업체 서비스 삭제
-  destroyOffer = async (offerId) => {
+  destroyOffer = async (offerId, userId) => {
     const t = await sequelize.transaction();
 
     try {

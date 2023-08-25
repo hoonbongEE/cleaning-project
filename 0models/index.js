@@ -26,22 +26,16 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach((file) => {
-    // const model = require(path.join(__dirname, file))(
-    //     sequelize,
-    //     Sequelize.DataTypes
-    // );
-    // console.log(file);
     const model = require(path.join(__dirname, file));
-    // console.log(`model: ${model}`);
-    // console.log(`model name: ${model.name}`);
-    // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@");
-    // console.log(`model: ${model}`);
+
     db[model.name] = model;
     model.initiate(sequelize);
+    // console.log(model.initiate);
   });
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
+    // console.log('@@@@@@@@', db);
     db[modelName].associate(db);
   }
 });

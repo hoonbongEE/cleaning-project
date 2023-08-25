@@ -1,8 +1,19 @@
-const Sequelize = require('sequelize');
+const { Sequelize, Model } = require('sequelize');
 
 class Company extends Sequelize.Model {
+  static associate(db) {
+    db.Company.belongsTo(db.User, {
+      foreignKey: 'userId',
+      targetKey: 'userId',
+    });
+    db.Company.hasMany(db.Offer, {
+      foreignKey: 'companyId',
+      sourceKey: 'companyId',
+    });
+  }
+
   static initiate(sequelize) {
-    Company.init(
+    super.init(
       {
         companyId: {
           type: Sequelize.INTEGER,
@@ -38,17 +49,6 @@ class Company extends Sequelize.Model {
         collate: 'utf8_general_ci',
       }
     );
-  }
-
-  static associate(db) {
-    db.Company.belongsTo(db.User, {
-      foreignKey: 'userId',
-      targetKey: 'userId',
-    });
-    db.Company.hasMany(db.Offer, {
-      foreignKey: 'companyId',
-      sourceKey: 'companyId',
-    });
   }
 }
 

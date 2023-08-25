@@ -6,6 +6,11 @@ class UserRepository {
     return await User.findOne({ where: { email } });
   };
 
+  // userId로 조회
+  findUserOne = async (userId) => {
+    return await User.findOne({ where: { userId } });
+  };
+
   // 회원가입 API
   signup_repository = async (permission, name, nickname, email, password, address, phoneNumber) => {
     const result = await User.create({

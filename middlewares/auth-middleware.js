@@ -4,7 +4,6 @@ const permissionCache = require('../cache/permissionCache');
 exports.authorized = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    console.log('Authorization Header:', authorization);
 
     if (!authorization) {
       return res.status(403).json({ errorMessage: '권한이 존재하지 않습니다.' });
@@ -32,14 +31,12 @@ exports.hasMinimumPermission = (permission) => {
   return async (req, res, next) => {
     try {
       const userId = res.locals.userId;
-      console.log('UserId:', userId);
 
       if (isNaN(userId) || userId < 1) {
         return res.status(400).json({ success: false, message: '허가된 유저만 사용 가능합니다.' });
       }
 
       const userPermission = permissionCache.getPermissionCache(userId);
-      console.log('User Permission:', userPermission);
 
       if (!userPermission) {
         return res.status(400).json({ success: false, message: '허가된 유저만 사용 가능합니다.' });
